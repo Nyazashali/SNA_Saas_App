@@ -1,30 +1,32 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Merriweather } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
-
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const merriweather = Merriweather({
+  variable: "--font-Merriweather",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "700", "900"],
 });
 
 export const metadata: Metadata = {
-  title: "Converso",
+  title: "LMS SaaS",
   description: "Real-time AI Teaching Platform",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${bricolage.variable} antialiased`}>
-        <Navbar />
-        {children}
+    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+      <html lang="en">
+        <body className={`${merriweather.variable} antialiased`}>
+          <Navbar />
+          {children}
         </body>
-    </html>
+      </html>
+    </ClerkProvider>
   );
 }
