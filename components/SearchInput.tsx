@@ -3,14 +3,15 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { formUrlQuery } from "@jsmastery/utils";
 
 const SearchInput = () => {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const query = searchParams.get(name: 'topic') || '';
+    const query = searchParams.get('topic') || '';
 
-    const [searchQuery, setSearchQuery] = useState(initialState: '');
+    const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if(searchQuery) {
@@ -19,7 +20,7 @@ const SearchInput = () => {
             key: "topic",
             value: searchQuery,
         });
-        router.push(newUrl);
+        router.push(newUrl, { scroll: false });
     }
     }, [searchQuery, router, searchParams, pathname]);
   return (
@@ -29,7 +30,7 @@ const SearchInput = () => {
         <input placeholder="Search companions..."
         className="outline-none"
         value={searchQuery} 
-        onchange={(e) => setSearchQuery(e.target.value)}/>
+        onChange={(e) => setSearchQuery(e.target.value)}/>
   
     </div>
   )
